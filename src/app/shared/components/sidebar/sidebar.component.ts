@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.lstMenu = [
           {
             nombre: 'Categorias',
-            icono: 'pets',
+            icono: 'category',
             ruta: '/admin/categorias'
           }
         ]}

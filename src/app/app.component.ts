@@ -10,7 +10,7 @@ import { UtilsService } from './shared/services/util.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<any>();
-  title = 'Mascotas';
+  title = 'Categorias';
   opened = false;
 
   constructor(private utilsSvc: UtilsService) {}
