@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserResponse } from '@app/shared/models/user.interface';
 import { Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogoConfirmacionComponent } from '@app/shared/component/dialogo-confirmacion/dialogo-confirmacion.component';
 import { takeUntil } from 'rxjs/operators';
 import { CategoriasService } from '../services/categorias.service';
 import { ModalFormularioComponent } from './modal-formulario/modal-formulario.component';
@@ -23,8 +25,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     'eliminar'
   ];
   lstUsers: UserResponse[] = [];
-
-  constructor(private categoriasSvc: CategoriasService, private dialog: MatDialog) { }
+  constructor(private categoriasSvc: CategoriasService, private dialog: MatDialog, private _snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.listCategorias();
@@ -47,10 +48,30 @@ export class CategoriasComponent implements OnInit, OnDestroy {
         this.listCategorias();
       }
     }); }
-
-  ngOnDestroy(): void {
-    this.destroy$.next({});
-    this.destroy$.complete();
+    onDelete(cveCategoria: number) {
+      this.dialog.open(DialogoConfirmacionComponent, {
+        disableClose: true,
+        data: "Estas seguro de querer eliminarlo"
+      }).beforeClosed()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(result => {
+          if (result) {
+            this.categoriasSvc.delete(cveCategoria)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe(result => {
+                if (result) {
+                  this._snackbar.open(result.message, '', {
+                    duration: 6000
+                  });
+                  this.listCategorias();
+                }
+              });
+          }
+        })
+    }
+  
+    ngOnDestroy(): void {
+      this.destroy$.next({});
+      this.destroy$.complete();
+    }
   }
-
-}

@@ -37,6 +37,11 @@ export class CategoriasService {
     return this.http.post<any>(`${environment.URL_API}/categoria`, user)
     .pipe(catchError((error) => this.handleError(error)));
   }
+  delete(cveCategoria: number): Observable<any> {
+    return this.http.delete<any>(`${environment.URL_API}/categoria/${cveCategoria}`)
+    .pipe(catchError((error) => this.handleError(error)));
+  }
+
   private handleError(err: any): Observable<never> {
     let errorMessage = "Ocurrio un error";
 
