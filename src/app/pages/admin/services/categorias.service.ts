@@ -7,6 +7,7 @@ import { environment } from '@env/environment';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,7 @@ export class CategoriasService {
   }
 
   getTipos(): Observable<Tipo[]> {
-    return this.http.get<Tipo[]>(`${environment.URL_API}/Tipos/Tipos`).
+    return this.http.get<Tipo[]>(`${environment.URL_API}/general/tipo`).
     pipe(catchError((error) => 
       this.handleError(error)));
   }
@@ -28,7 +29,7 @@ export class CategoriasService {
   getById(): void {}
 
   new(user: UserResponse): Observable<any> {
-    return this.http.put<any>(`${environment.URL_API}/categorias`, user)
+    return this.http.put<any>(`${environment.URL_API}/categoria`, user)
     .pipe(catchError((error) => this.handleError(error)));
   }
 

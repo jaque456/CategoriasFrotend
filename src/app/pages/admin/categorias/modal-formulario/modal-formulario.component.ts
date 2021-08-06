@@ -5,12 +5,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoriasService } from '../../services/categorias.service';
 import { AuthService } from '@app/pages/auth/auth.service';
 import { Tipo } from '@app/shared/models/tipo.interface';
-import { User, UserResponse } from '@app/shared/models/user.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 enum Action{
-  EDIT = "",
-  NEW = ""
+  EDIT = "edit",
+  NEW = "new"
 }
 
 @Component({
@@ -28,10 +27,10 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
 
   categoriaForm = this.fb.group({
     cveUsuario: [''],
-    cvePropietario : [this.authSvc.userValue?.cveUsuario],
-    nombreMascota : ['', [Validators.required]],
-    fechaAdopcion : ['', [Validators.required]],
-    raza : ['', [Validators.required]]
+    cveRegistro : [this.authSvc.userValue?.cveUsuario],
+    nombreCategoria : ['', [Validators.required]],
+    descripcion : ['', [Validators.required]],
+    tipo : ['', [Validators.required]]
   })
 
   constructor(public dialogRef: MatDialogRef<ModalFormularioComponent> ,@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private categoriasSvc: CategoriasService, private _snackBar: MatSnackBar, private authSvc: AuthService) { }
