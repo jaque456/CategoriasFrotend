@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   URL_API: "http://localhost:3000",
-  SECRET_KEY: 'Ma$coTas#01'
+  SECRET_KEY: 'Categorias#01'
 };
 
 /*

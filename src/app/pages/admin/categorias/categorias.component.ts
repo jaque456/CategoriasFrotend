@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogoConfirmacionComponent } from '@app/shared/component/dialogo-confirmacion/dialogo-confirmacion.component';
 import { takeUntil } from 'rxjs/operators';
 import { CategoriasService } from '../services/categorias.service';
+import { AuthService } from '@app/pages/auth/auth.service';
 import { ModalFormularioComponent } from './modal-formulario/modal-formulario.component';
 
 @Component({
@@ -25,13 +26,14 @@ export class CategoriasComponent implements OnInit, OnDestroy {
     'eliminar'
   ];
   lstUsers: UserResponse[] = [];
-  constructor(private categoriasSvc: CategoriasService, private dialog: MatDialog, private _snackbar: MatSnackBar) { }
+  constructor(private categoriasSvc: CategoriasService, private dialog: MatDialog, private _snackbar: MatSnackBar, private authSvc: AuthService) { }
 
   ngOnInit(): void {
     this.listCategorias();
   }
   private listCategorias(): void{
-    this.categoriasSvc.lista()
+   const result = this.authSvc.userValue?.username!;
+    this.categoriasSvc.lista(result)
     .pipe(takeUntil(this.destroy$))
     .subscribe(users => this.lstUsers = users);
   }

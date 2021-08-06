@@ -15,8 +15,8 @@ export class CategoriasService {
 
   constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
-  lista(): Observable<UserResponse[]> {
-    return this.http.get<UserResponse[]>(`${environment.URL_API}/categoria`)
+  lista(username: string): Observable<UserResponse[]> {
+    return this.http.get<UserResponse[]>(`${environment.URL_API}/categoria/listaByUsuario/${username}`)
       .pipe(catchError((err) => this.handleError(err)));
   }
 
