@@ -40,7 +40,7 @@
         Cancelar
     </button>
     <button mat-raised-button color="primary"></button>
-        <button mat-raised-button color="primary" (click)="onSave()">
+    <button [disabled]="categoriaForm.invalid" mat-raised-button color="primary" (click)="onSave()">
             <mat-icon>save</mat-icon>
             Guardar
         </button>

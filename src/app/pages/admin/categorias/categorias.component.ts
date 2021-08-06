@@ -27,6 +27,9 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   constructor(private categoriasSvc: CategoriasService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.listCategorias();
+  }
+  private listCategorias(): void{
     this.categoriasSvc.lista()
     .pipe(takeUntil(this.destroy$))
     .subscribe(users => this.lstUsers = users);
@@ -37,7 +40,13 @@ export class CategoriasComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {title: 'Nuevo usuario', user}
     });
-  }
+    dialogRef.afterClosed()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(result => {
+      if(result){
+        this.listCategorias();
+      }
+    }); }
 
   ngOnDestroy(): void {
     this.destroy$.next({});

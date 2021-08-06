@@ -26,11 +26,10 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
   tipos : Tipo[] = [];
 
   categoriaForm = this.fb.group({
-    cveUsuario: [''],
+    cveCategoria: [''],
     cveRegistro : [this.authSvc.userValue?.cveUsuario],
     nombreCategoria : ['', [Validators.required]],
     descripcion : ['', [Validators.required]],
-    tipo : ['', [Validators.required]]
   })
 
   constructor(public dialogRef: MatDialogRef<ModalFormularioComponent> ,@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private categoriasSvc: CategoriasService, private _snackBar: MatSnackBar, private authSvc: AuthService) { }
@@ -39,7 +38,9 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
     this.getTipos();
     if(this.data?.user.hasOwnProperty("cveCategoria")){
       this.actionTODO = Action.EDIT;
-      this.data.title = "Editar Categoria"
+      this.data.title = "Editar Categoria",
+      this.categoriaForm.updateValueAndValidity();
+      this.editar();
     }
   }
 
@@ -74,10 +75,28 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
       });
     } else {
       // Update
+      const { ...rest } = formValue;
+      this.categoriasSvc.update(rest)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(result => {
+        this._snackBar.open(result.message, '', {
+          duration: 6000
+        });
+        this.dialogRef.close(true);  
+      });
     }
 
     console.log(this.categoriasSvc);
+  }  
+  private editar(): void {
+    this.categoriaForm.patchValue({
+      cveCategoria : this.data?.user.cveCategoria,
+      nombreCategoria : this.data?.user.nombreCategoria,
+      descripcion : this.data?.user.descripcion,
+      tipo : this.data?.user.tipo
+    });
   }
+
 
   getErrorMessage(field: string): string{
     let message = "";
