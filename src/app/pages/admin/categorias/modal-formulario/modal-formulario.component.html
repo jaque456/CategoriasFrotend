@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ data?.title }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="categoriaForm">
+
+    <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Nombre de la categoria: </mat-label>
+        <input formControlName="nombreCategoria" matInput required>
+        <mat-error>
+            {{ getErrorMessage('nombreCategoria') }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width"  appearance="outline">
+        <mat-label> Descripcion: </mat-label>
+        <input matInput formControlName="descripcion" type="text" required>
+            <mat-error>
+                {{ getErrorMessage('descripcion') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="nombreTipo">
+              <mat-option *ngFor="let tipo of tipos" [value]="tipo.cveTipo">
+                  {{ tipo.nombreTipo }}
+              </mat-option>
+          </mat-select>
+          <mat-error>
+              {{ getErrorMessage('cveTipo') }}
+          </mat-error>
+      </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+    </button>
+    <button mat-raised-button color="primary" (click)="onSave()">
+      <mat-icon>save</mat-icon>
+      Guardar
+  </button>
+</mat-dialog-actions>
