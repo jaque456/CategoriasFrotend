@@ -30,6 +30,8 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
     cveRegistro : [this.authSvc.userValue?.cveUsuario],
     nombreCategoria : ['', [Validators.required]],
     descripcion : ['', [Validators.required]],
+    tipo:['',[Validators.required]]
+    
   })
 
   constructor(public dialogRef: MatDialogRef<ModalFormularioComponent> ,@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, private categoriasSvc: CategoriasService, private _snackBar: MatSnackBar, private authSvc: AuthService) { }
@@ -93,7 +95,8 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
       cveCategoria : this.data?.user.cveCategoria,
       nombreCategoria : this.data?.user.nombreCategoria,
       descripcion : this.data?.user.descripcion,
-      tipo : this.data?.user.tipo
+      tipo : this.data?.user.tipo,
+      cveRegistro: this.data?.user.cveUsuario
     });
   }
 
