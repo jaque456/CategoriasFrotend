@@ -3,21 +3,20 @@
     <form [formGroup]="categoriaForm">
 
         <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Nombre de la categoria: </mat-label>
+            <mat-label >Nombre de la categoria: </mat-label>
 
             <input formControlName="nombreCategoria" matInput required>
             <mat-error>
                 {{ getErrorMessage('nombreCategoria') }}
             </mat-error>
         </mat-form-field>
-
-        <mat-form-field class="full-width" appearance="outline">
-            <mat-label> Descripcion: </mat-label>
-            <input matInput formControlName="descripcion" type="text" required>
-            <mat-error>
-                {{ getErrorMessage('descripcion') }}
-            </mat-error>
-        </mat-form-field>
+       <mat-form-field class="full-width" appearance="outline">
+           <mat-label>Descripción </mat-label>
+           <textarea matInput formControlName="descripcion" required></textarea>
+           <mat-error>
+            {{ getErrorMessage('descripcion') }}
+        </mat-error>
+       </mat-form-field>
 
         <mat-form-field class="full-width" appearance="outline">
             <mat-label> Tipos </mat-label>

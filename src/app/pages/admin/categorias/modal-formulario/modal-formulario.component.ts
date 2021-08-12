@@ -28,8 +28,8 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
   categoriaForm = this.fb.group({
     cveCategoria: [''],
     cveRegistro : [this.authSvc.userValue?.cveUsuario],
-    nombreCategoria : ['', [Validators.required]],
-    descripcion : ['', [Validators.required]],
+    nombreCategoria : ['', [Validators.required, Validators.maxLength(250)]],
+    descripcion : ['', [Validators.required, Validators.maxLength(500)]],
     tipo:['',[Validators.required]]
     
   })
@@ -104,18 +104,18 @@ export class ModalFormularioComponent implements OnInit, OnDestroy {
   getErrorMessage(field: string): string{
     let message = "";
 
-    const element = this.categoriaForm.get(field);
+    const campo = this.categoriaForm?.get(field);
 
-    if(element?.errors){
-      const messages: any = {
-        required : "Este campo es requerido"
-      };
-
-      const errorKey = Object.keys(element?.errors).find(Boolean);
-      message = String(messages[String(errorKey)]);
+    if(campo != null){
+      if(campo.errors?.required){
+        message = "Este campo es requerido";
+      
+      } else if(campo.errors?.maxlength){
+        message = "Los caracteres maximos son 250";
+      }
     }
+    
 
     return message;
   }
-
 }
